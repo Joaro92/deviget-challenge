@@ -19,14 +19,14 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 class CalculatorTests {
 
-	@Test
+	//@Test
 	@DisplayName("1 + 1 = 2")
 	void addsTwoNumbers() {
 		Calculator calculator = new Calculator();
 		assertEquals(2, calculator.add(1, 1), "1 + 1 should equal 2");
 	}
 
-	@ParameterizedTest(name = "{0} + {1} = {2}")
+	//@ParameterizedTest(name = "{0} + {1} = {2}")
 	@CsvSource({
 			"0,    1,   1",
 			"1,    2,   3",
