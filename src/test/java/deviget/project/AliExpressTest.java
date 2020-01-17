@@ -7,5 +7,6 @@ public class AliExpressTest extends BaseTest {
     @Test
     public void test() {
         WebUI.goToURL("https://www.aliexpress.com");
+        WebUI.sendKeys("aliexpress\\searchInput");
     }
 }

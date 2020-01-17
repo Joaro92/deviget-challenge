@@ -16,6 +16,7 @@ public class BaseTest {
     @BeforeEach
     public void setupTest() {
         WebUI.init(new ChromeDriver());
+        System.out.println("\n-----------------------------------------------\n");
     }
 
     @AfterEach
