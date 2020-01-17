@@ -1,6 +1,7 @@
 package selenium.controller;
 
 import common.AuxMethods;
+import org.javatuples.Pair;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -33,15 +34,15 @@ public class WebUI {
         driver.get(url);
     }
 
-    public static void sendKeys(String testObject) {
-        WebElement elem = getWebElementFrom(testObject);
+    public static void sendKeys(String testObject, String text) {
+        getWebElementFrom(testObject).sendKeys(text);
     }
 
 
     //-------------- Private Methods --------------
 
     private static WebElement getWebElementFrom(String testObject) {
-        AuxMethods.getSelectorFromFile(testObject);
-        return null;
+        Pair<String, String> selector = AuxMethods.getSelectorFromFile(testObject);
+        return AuxMethods.findWebElement(driver, selector);
     }
 }
