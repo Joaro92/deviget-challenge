@@ -6,7 +6,7 @@ import selenium.controller.WebUI;
 
 public class AliExpressTest extends BaseTest {
     @Test
-    public void test() throws InterruptedException {
+    public void test() throws Exception {
         WebUI.goToURL("https://www.aliexpress.com");
 
         //Search if Popup shown and close it
@@ -24,5 +24,9 @@ public class AliExpressTest extends BaseTest {
             WebUI.clickOn("aliexpress/closePopup2Button");
         }
 
+        //Scroll down until Page 2 button is found. 30 PAGE_DOWN maximum
+        WebUI.scrollDownUntilElementPresent("aliexpress/pageTwoButton", 30);
+
+        WebUI.clickOn("aliexpress/pageTwoButton");
     }
 }

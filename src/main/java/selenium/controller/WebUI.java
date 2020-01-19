@@ -1,6 +1,8 @@
 package selenium.controller;
 
 import common.AuxMethods;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 
 public class WebUI {
@@ -42,5 +44,17 @@ public class WebUI {
     //Wait for an element to appear in the DOM until timeOut seconds and returns True if present
     public static boolean waitForElement(String testObject, int timeOut) {
         return AuxMethods.waitForElementPresent(driver, timeOut,testObject);
+    }
+
+    //Presses the PAGE_DOWN button as many times as specified until element is found
+    public static void scrollDownUntilElementPresent(String testObject, int times) throws Exception {
+        int counter = 0;
+        while(!AuxMethods.isElementPresent(driver, testObject)) {
+            if (counter >= times) {
+                throw new Exception("Scrolled " + times + " times and the element " + testObject + " was not found");
+            }
+            counter++;
+            driver.findElement(By.tagName("body")).sendKeys(Keys.chord(Keys.PAGE_DOWN));
+        }
     }
 }

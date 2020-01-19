@@ -33,6 +33,11 @@ public class AuxMethods {
         }
     }
 
+    public static boolean isElementPresent(WebDriver driver, String testObject) {
+        Pair<String, String> selector = getSelectorFromFile(testObject);
+        return driver.findElements(getByFrom(selector)).size() > 0;
+    }
+
     // --------------- Private Methods ---------------
 
     //Return the By Class used to find Web elements
