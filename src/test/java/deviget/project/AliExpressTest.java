@@ -9,7 +9,19 @@ public class AliExpressTest extends BaseTest {
     public void test() {
         WebUI.goToURL("https://www.aliexpress.com");
 
-        WebUI.sendKeys("aliexpress/searchInput", "iPhone");
-        WebUI.sendKeys("aliexpress/searchInput", Keys.chord(Keys.ENTER));
+        //Search if Popup shown and close it
+        boolean isPresent = WebUI.waitForElement("aliexpress/closePopupButton", 3);
+        if (isPresent) {
+            WebUI.clickOn("aliexpress/closePopupButton");
+        }
+
+        WebUI.typeIn("aliexpress/searchInput", "iPhone");
+        WebUI.typeIn("aliexpress/searchInput", Keys.chord(Keys.ENTER));
+
+        //Search again for the Popup
+        isPresent = WebUI.waitForElement("aliexpress/closePopupButton", 3);
+        if (isPresent) {
+            WebUI.clickOn("aliexpress/closePopupButton");
+        }
     }
 }

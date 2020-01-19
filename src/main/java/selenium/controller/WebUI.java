@@ -1,11 +1,7 @@
 package selenium.controller;
 
 import common.AuxMethods;
-import org.javatuples.Pair;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-
-import java.util.concurrent.TimeUnit;
 
 public class WebUI {
     private static WebDriver driver;
@@ -13,7 +9,6 @@ public class WebUI {
     //Initializing WebDriver Wrapper
     public static void init(WebDriver _driver) {
         driver = _driver;
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS) ;
     }
 
     //Close opened Browser instances
@@ -34,15 +29,18 @@ public class WebUI {
         driver.get(url);
     }
 
-    public static void sendKeys(String testObject, String text) {
-        getWebElementFrom(testObject).sendKeys(text);
+    //Send text as Key Presses to the specified Input box
+    public static void typeIn(String testObject, String text) {
+        AuxMethods.getWebElementFrom(driver, testObject).sendKeys(text);
     }
 
+    //Mouse click on the element
+    public static void clickOn(String testObject) {
+        AuxMethods.getWebElementFrom(driver, testObject).click();
+    }
 
-    //-------------- Private Methods --------------
-
-    private static WebElement getWebElementFrom(String testObject) {
-        Pair<String, String> selector = AuxMethods.getSelectorFromFile(testObject);
-        return AuxMethods.findWebElement(driver, selector);
+    //Wait for an element to appear in the DOM until timeOut seconds and returns True if present
+    public static boolean waitForElement(String testObject, int timeOut) {
+        return AuxMethods.waitForElementPresent(driver, timeOut,testObject);
     }
 }
