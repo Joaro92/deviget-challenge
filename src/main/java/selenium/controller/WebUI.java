@@ -3,6 +3,7 @@ package selenium.controller;
 import common.AuxMethods;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 
 public class WebUI {
@@ -56,5 +57,40 @@ public class WebUI {
             counter++;
             driver.findElement(By.tagName("body")).sendKeys(Keys.chord(Keys.PAGE_DOWN));
         }
+
+        Thread.sleep(300);
+    }
+
+    //Returns if the element is visible in the DOM
+    public static boolean isElementVisible(String testObject) {
+        if (!AuxMethods.isElementPresent(driver, testObject)) {
+            return false;
+        }
+
+        return AuxMethods.getWebElementFrom(driver, testObject).isDisplayed();
+    }
+
+    //Return the displayed text from the specified element
+    public static String getTextFrom(String testObject) {
+        return AuxMethods.getWebElementFrom(driver, testObject).getText();
+    }
+
+    //Finds the element and then waits until it's removed from the DOM or the time is out
+    public static void waitUntilElementHasDisappeared(String testObject, int timeOut) throws InterruptedException {
+        if (!AuxMethods.waitForElementPresent(driver, 2, testObject)) {
+            return;
+        }
+
+        AuxMethods.waitUntilElementDisappears(driver, timeOut, testObject);
+        Thread.sleep(300);
+    }
+
+    //Scrolls down until element is visible on screen
+    public static void scrollDownTo(String testObject) throws InterruptedException {
+        AuxMethods.scrollTo(driver, testObject);
+    }
+
+    public static String getCurrentPageTitle() {
+        return driver.getTitle();
     }
 }

@@ -1,10 +1,7 @@
 package common;
 
 import org.javatuples.Pair;
-import org.openqa.selenium.By;
-import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.yaml.snakeyaml.Yaml;
@@ -33,9 +30,25 @@ public class AuxMethods {
         }
     }
 
+    public static void waitUntilElementDisappears(WebDriver driver, int seconds, String testObject) {
+        WebDriverWait wait = new WebDriverWait(driver, seconds);
+        Pair<String, String> selector = getSelectorFromFile(testObject);
+        By locator = getByFrom(selector);
+
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(locator));
+    }
+
     public static boolean isElementPresent(WebDriver driver, String testObject) {
         Pair<String, String> selector = getSelectorFromFile(testObject);
         return driver.findElements(getByFrom(selector)).size() > 0;
+    }
+
+    public static void scrollTo(WebDriver driver, String testObject) throws InterruptedException {
+        Pair<String, String> selector = getSelectorFromFile(testObject);
+
+        WebElement element = driver.findElement(getByFrom(selector));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
+        Thread.sleep(300);
     }
 
     // --------------- Private Methods ---------------
