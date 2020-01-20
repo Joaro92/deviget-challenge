@@ -1,14 +1,13 @@
 package selenium.controller;
 
 import common.AuxMethods;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 
+import java.io.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class WebUI {
     private static WebDriver driver;
@@ -99,5 +98,26 @@ public class WebUI {
 
         List<String> windows = new ArrayList<>(driver.getWindowHandles());
         driver.switchTo().window(windows.get(windows.size() - 1));
+    }
+
+    //Take screenshot of the page
+    public static void takeScreenshot() {
+        File screenshotFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+        (new File("screenshots/")).mkdirs();
+
+        String now = (new SimpleDateFormat("yyyy-MM-dd_HHmmss")).format(new Date());
+        File newFileDestination = new File("screenshots/" + now + ".png");
+
+        try (var fis = new FileInputStream(screenshotFile);
+        var fos = new FileOutputStream(newFileDestination)) {
+            byte[] buffer = new byte[1024];
+            int length;
+
+            while ((length = fis.read(buffer)) > 0) {
+                fos.write(buffer, 0, length);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

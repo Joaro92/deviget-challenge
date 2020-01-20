@@ -20,7 +20,7 @@ public class AliExpressTest extends BaseTest {
         WebUI.typeIn("aliexpress/searchInput", Keys.chord(Keys.ENTER));
 
         //Search again for the Popup if present and close it
-        isPresent = WebUI.waitForElement("aliexpress/closePopup2Button", 2);
+        isPresent = WebUI.waitForElement("aliexpress/closePopup2Button", 3);
         if (isPresent) {
             WebUI.clickOn("aliexpress/closePopup2Button");
         }
