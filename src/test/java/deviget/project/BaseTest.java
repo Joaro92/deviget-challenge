@@ -11,12 +11,12 @@ import selenium.controller.WebUI;
 public class BaseTest {
     @BeforeAll
     public static void setupClass() {
-        WebDriverManager.firefoxdriver().setup();
+        WebDriverManager.chromedriver().setup();
     }
 
     @BeforeEach
     public void setupTest() {
-        WebUI.init(new FirefoxDriver());
+        WebUI.init(new ChromeDriver());
         System.out.println("\n-----------------------------------------------\n");
     }
 

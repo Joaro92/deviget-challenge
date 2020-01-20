@@ -6,6 +6,10 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class WebUI {
     private static WebDriver driver;
 
@@ -58,7 +62,7 @@ public class WebUI {
             driver.findElement(By.tagName("body")).sendKeys(Keys.chord(Keys.PAGE_DOWN));
         }
 
-        Thread.sleep(300);
+        scrollDownTo(testObject);
     }
 
     //Returns if the element is visible in the DOM
@@ -82,7 +86,6 @@ public class WebUI {
         }
 
         AuxMethods.waitUntilElementDisappears(driver, timeOut, testObject);
-        Thread.sleep(300);
     }
 
     //Scrolls down until element is visible on screen
@@ -90,7 +93,11 @@ public class WebUI {
         AuxMethods.scrollTo(driver, testObject);
     }
 
-    public static String getCurrentPageTitle() {
-        return driver.getTitle();
+    //Switch Driver focus to last opened tab
+    public static void switchToCurrentTab() {
+        try {Thread.sleep(500);} catch (Exception ignored) {}
+
+        List<String> windows = new ArrayList<>(driver.getWindowHandles());
+        driver.switchTo().window(windows.get(windows.size() - 1));
     }
 }

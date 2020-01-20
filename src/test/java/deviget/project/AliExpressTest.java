@@ -11,7 +11,7 @@ public class AliExpressTest extends BaseTest {
         WebUI.goToURL("https://www.aliexpress.com");
 
         //Search if Popup shown and close it
-        boolean isPresent = WebUI.waitForElement("aliexpress/closePopupButton", 3);
+        boolean isPresent = WebUI.waitForElement("aliexpress/closePopupButton", 2);
         if (isPresent) {
             WebUI.clickOn("aliexpress/closePopupButton");
         }
@@ -20,7 +20,7 @@ public class AliExpressTest extends BaseTest {
         WebUI.typeIn("aliexpress/searchInput", Keys.chord(Keys.ENTER));
 
         //Search again for the Popup if present and close it
-        isPresent = WebUI.waitForElement("aliexpress/closePopup2Button", 3);
+        isPresent = WebUI.waitForElement("aliexpress/closePopup2Button", 2);
         if (isPresent) {
             WebUI.clickOn("aliexpress/closePopup2Button");
         }
@@ -34,11 +34,12 @@ public class AliExpressTest extends BaseTest {
         //Assert that Ads are displayed in the Page
         Assertions.assertTrue(WebUI.isElementVisible("aliexpress/p4pAds"));
 
-        String adTitle = WebUI.getTextFrom("aliexpress/secondP4pAdTitle");
+        WebUI.scrollDownTo("aliexpress/firstP4pAd");
+        WebUI.clickOn("aliexpress/firstP4pAd");
 
-        WebUI.scrollDownTo("aliexpress/secondP4pAd");
-        WebUI.clickOn("aliexpress/secondP4pAd");
+        WebUI.switchToCurrentTab();
 
-        System.out.println(WebUI.getCurrentPageTitle());
+        //If Buy Now button is visible then the iPhone results page has at least one item to be bought
+        Assertions.assertTrue(WebUI.isElementVisible("aliexpress/buyNowButton"));
     }
 }

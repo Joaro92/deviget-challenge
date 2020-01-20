@@ -30,12 +30,13 @@ public class AuxMethods {
         }
     }
 
-    public static void waitUntilElementDisappears(WebDriver driver, int seconds, String testObject) {
+    public static void waitUntilElementDisappears(WebDriver driver, int seconds, String testObject) throws InterruptedException {
         WebDriverWait wait = new WebDriverWait(driver, seconds);
         Pair<String, String> selector = getSelectorFromFile(testObject);
         By locator = getByFrom(selector);
 
         wait.until(ExpectedConditions.invisibilityOfElementLocated(locator));
+        Thread.sleep(300);
     }
 
     public static boolean isElementPresent(WebDriver driver, String testObject) {
@@ -47,7 +48,11 @@ public class AuxMethods {
         Pair<String, String> selector = getSelectorFromFile(testObject);
 
         WebElement element = driver.findElement(getByFrom(selector));
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
+        String scrollElementIntoMiddle = "var viewPortHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);"
+                + "var elementTop = arguments[0].getBoundingClientRect().top;"
+                + "window.scrollBy(0, elementTop-(viewPortHeight/2));";
+
+        ((JavascriptExecutor) driver).executeScript(scrollElementIntoMiddle, element);
         Thread.sleep(300);
     }
 
